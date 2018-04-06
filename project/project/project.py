@@ -81,13 +81,11 @@ def encode(img, msg):
     msg_len_bin = msg_len_bin[2:]
     msg_len_bin = ("0" * 32) + msg_len_bin + "0"
     msg_len_bin = msg_len_bin[-33:]
-    print(msg_len_bin)
 
     msg_bin = str(bin(int.from_bytes(msg.encode(), 'big')))
     msg_bin = msg_bin[:1] + msg_bin[2:]
 
     pixel_amount = int(msg_len/3)
-    print(pixel_amount)
     print("injecting size")
     injector(width, col, row, 11, msg_len_bin)
     print("size injected")
@@ -198,3 +196,5 @@ elif len(sys.argv) == 5 and (sys.argv[1] == '-e' or sys.argv[1] == '-E'):
         print("issue with last three arguments, check file extensions (*.jpg , *.txt , *)")
 elif len(sys.argv) > 5:
     print("Too many arguments, what are you doing?! STAHP!!!!")
+else:
+    print("Check parameters (python3 project.py -h)")
