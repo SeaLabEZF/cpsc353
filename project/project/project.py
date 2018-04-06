@@ -150,44 +150,9 @@ def newRGB(originalRGB, bit):
 # Description:                                       #
 # where all the action happens.                      #
 ######################################################
-if len(sys.argv) < 2:
+if len(sys.argv) == 1:
     print("missing parameter (can has [-h|-H|-d|-D|-e|-E]?)")
-elif sys.argv[1] == '-d' or sys.argv[1] == '-D':
-    if sys.argv[2] is not None and sys.argv[2][-4:] == '.png':
-        if sys.argv[2] is not None and sys.argv[3][-4:] == '.txt':
-            img = Image.open(sys.argv[2])
-            msg = decode(img)
-            file = open(sys.argv[3], "w")
-            file.write(msg)
-            file.close()
-            img.close()
-            print(msg)
-        else:
-            print("arg[3] incorrect (can has *.txt?)")
-    else:
-        print("arg[2] incorrect (can has *.png?)")
-elif sys.argv[1] == '-e' or sys.argv[1] == '-E':
-    if sys.argv[2] is not None and sys.argv[2][-4:] == '.jpg':
-        if sys.argv[2] is not None and sys.argv[3][-4:] == '.txt':
-            if sys.argv[4] is not None:
-                output = sys.argv[4]
-                if output[-4:] is '.png':
-                    output = output[:-4]
-                output = output + ".png"
-                img = Image.open(argv[2])
-                file = open(argv[3], "r")
-                msg = file.read()
-                encode(img, msg)
-                file.close()
-                img.save(output, "PNG")
-                img.close()
-            else:
-                print("arg[4] incorrect (can has output name?)")
-        else:
-            print("arg[3] incorrect (can has *.txt?)")
-    else:
-        print("arg[2] incorrect (can has *.jpg")
-elif sys.argv[1] == "-h" or sys.argv[1] == "-H":
+elif len(sys.argv) == 2 and (sys.argv[1] == '-h' or sys.argv[1] == '-H'):
     print("\t\tproject.py\n")
     print("SYNOPSIS\n")
     print("\tpython3 project.py [-h|-H]\n")
@@ -202,5 +167,34 @@ elif sys.argv[1] == "-h" or sys.argv[1] == "-H":
     print("\t[-h|-H] --help\t\tdisplays a short description of what the program does and how to run it.\n")
     print("\t[-d|-D] --decode\ttakes <*.png> image and a name for your output message.\n")
     print("\t[-e|-E] --encode\ttakes <*.jpg> image and a <*.txt> file as input and takes a name for your output image.\n")
-else:
-    print("unrecognized parameter (can has [-h|-H|-d|-D|-e|-E]?)")
+elif len(sys.argv) == 4 and (sys.argv[1] == '-d' or sys.argv[1] == '-D'):
+    infile = sys.argv[3]
+    inImage = sys.argv[2]
+    if inImage[-4:] == ".png" and infile[-4:] == ".txt":
+        img = Image.open(inImage)
+        msg = decode(img)
+        file = open(infile, "w")
+        file.write(msg)
+        file.close()
+        img.close()
+        print(msg)
+    else:
+        print("issue with last two arguments, check file extension (*.png , *.txt)")
+elif len(sys.argv) == 5 and (sys.argv[1] == '-e' or sys.argv[1] == '-E'):
+    inImage = sys.argv[2]
+    infile = sys.argv[3]
+    outImage = sys.argv[4]
+    if inImage[-4:] == ".jpg" and infile[-4:] == ".txt":
+        if outImage[-4:] == ".png":
+            outImage = outImage[:-4]
+        outImage = outImage + ".png"
+        file = open(infile)
+        msg = file.read()
+        file.close()
+        img = Image.open(inImage)
+        encode(img, msg)
+        img.save(outImage, "PNG")
+    else:
+        print("issue with last three arguments, check file extensions (*.jpg , *.txt , *)")
+elif len(sys.argv) > 5:
+    print("Too many arguments, what are you doing?! STAHP!!!!")
