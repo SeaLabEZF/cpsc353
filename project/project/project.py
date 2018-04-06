@@ -150,12 +150,11 @@ def newRGB(originalRGB, bit):
 # Description:                                       #
 # where all the action happens.                      #
 ######################################################
-
-if len(sys.argv) < 1:
+if len(sys.argv) < 2:
     print("missing parameter (can has [-h|-H|-d|-D|-e|-E]?)")
-elif sys.argv[1] is '-d' or sys.argv[1] is '-D':
-    if sys.argv[2][-4:] is '.png':
-        if sys.argv[3][-4:] is '.txt':
+elif sys.argv[1] == '-d' or sys.argv[1] == '-D':
+    if sys.argv[2] is not None and sys.argv[2][-4:] == '.png':
+        if sys.argv[2] is not None and sys.argv[3][-4:] == '.txt':
             img = Image.open(sys.argv[2])
             msg = decode(img)
             file = open(sys.argv[3], "w")
@@ -167,9 +166,9 @@ elif sys.argv[1] is '-d' or sys.argv[1] is '-D':
             print("arg[3] incorrect (can has *.txt?)")
     else:
         print("arg[2] incorrect (can has *.png?)")
-elif sys.argv[1] is '-e' or sys.argv[1] is '-E':
-    if sys.argv[2][-4:] is '.jpg':
-        if sys.argv[3][-4:] is '.txt':
+elif sys.argv[1] == '-e' or sys.argv[1] == '-E':
+    if sys.argv[2] is not None and sys.argv[2][-4:] == '.jpg':
+        if sys.argv[2] is not None and sys.argv[3][-4:] == '.txt':
             if sys.argv[4] is not None:
                 output = sys.argv[4]
                 if output[-4:] is '.png':
@@ -188,7 +187,7 @@ elif sys.argv[1] is '-e' or sys.argv[1] is '-E':
             print("arg[3] incorrect (can has *.txt?)")
     else:
         print("arg[2] incorrect (can has *.jpg")
-elif sys.argv[1] is '-h' or sys.argv[1] is '-H':
+elif sys.argv[1] == "-h" or sys.argv[1] == "-H":
     print("\t\tproject.py\n")
     print("SYNOPSIS\n")
     print("\tpython3 project.py [-h|-H]\n")
