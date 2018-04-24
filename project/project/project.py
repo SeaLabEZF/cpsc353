@@ -3,6 +3,48 @@ import math
 import sys
 
 ######################################################
+# Function: Main                                     #
+######################################################
+def main():
+    if len(sys.argv) == 1:
+        print("missing parameter (can has [-h|-H|-d|-D|-e|-E]?)")
+    elif len(sys.argv) == 2 and (sys.argv[1] == '-h' or sys.argv[1] == '-H'):
+        helpMenu()
+    elif len(sys.argv) == 4 and (sys.argv[1] == '-d' or sys.argv[1] == '-D'):
+        inImage = sys.argv[2]
+        infile = sys.argv[3]
+        if inImage[-4:] == ".png" and infile[-4:] == ".txt":
+            img = Image.open(inImage)
+            msg = decode(img)
+            file = open(infile, "w")
+            file.write(msg)
+            file.close()
+            img.close()
+            print("Encoded message stored in", infile)
+        else:
+            print("issue with last two arguments, check file extension (*.png , *.txt)")
+    elif len(sys.argv) == 5 and (sys.argv[1] == '-e' or sys.argv[1] == '-E'):
+        inImage = sys.argv[2]
+        infile = sys.argv[3]
+        outImage = sys.argv[4]
+        if inImage[-4:] == ".jpg" and infile[-4:] == ".txt":
+            if outImage[-4:] == ".png":
+                outImage = outImage[:-4]
+            outImage = outImage + ".png"
+            file = open(infile)
+            msg = file.read()
+            file.close()
+            img = Image.open(inImage)
+            encode(img, msg)
+            img.save(outImage, "PNG")
+        else:
+            print("issue with last three arguments, check file extensions (*.jpg , *.txt , *)")
+    elif len(sys.argv) > 5:
+        print("Too many arguments, what are you doing?! STAHP!!!!")
+    else:
+        print("Check parameters (python3 project.py -h)")
+
+######################################################
 # Function: decode                                   #
 # Input: img                                         #
 # Output: converted_msg                              #
@@ -141,16 +183,15 @@ def newRGB(originalRGB, bit):
         return originalRGB + bit
 
 ######################################################
-# main                                               #
-# Input: argv[n]                                     #
+# Function: help                                     #
+# Input: N/A                                         #
 # Output: N/A                                        #
 #                                                    #
 # Description:                                       #
-# where all the action happens.                      #
+# Outputs a help menu for the program.               #
 ######################################################
-if len(sys.argv) == 1:
-    print("missing parameter (can has [-h|-H|-d|-D|-e|-E]?)")
-elif len(sys.argv) == 2 and (sys.argv[1] == '-h' or sys.argv[1] == '-H'):
+
+def helpMenu():
     print("\t\tproject.py\n")
     print("SYNOPSIS\n")
     print("\tpython3 project.py [-h|-H]\n")
@@ -164,36 +205,6 @@ elif len(sys.argv) == 2 and (sys.argv[1] == '-h' or sys.argv[1] == '-H'):
     print("\t[-h|-H] --help\t\tdisplays a short description of what the program does and how to run it.\n")
     print("\t[-d|-D] --decode\ttakes <*.png> image and a name for your output message.\n")
     print("\t[-e|-E] --encode\ttakes <*.jpg> image and a <*.txt> file as input and takes a name for your output image.\n")
-elif len(sys.argv) == 4 and (sys.argv[1] == '-d' or sys.argv[1] == '-D'):
-    inImage = sys.argv[2]
-    infile = sys.argv[3]
-    if inImage[-4:] == ".png" and infile[-4:] == ".txt":
-        img = Image.open(inImage)
-        msg = decode(img)
-        file = open(infile, "w")
-        file.write(msg)
-        file.close()
-        img.close()
-        print("Encoded message stored in", infile)
-    else:
-        print("issue with last two arguments, check file extension (*.png , *.txt)")
-elif len(sys.argv) == 5 and (sys.argv[1] == '-e' or sys.argv[1] == '-E'):
-    inImage = sys.argv[2]
-    infile = sys.argv[3]
-    outImage = sys.argv[4]
-    if inImage[-4:] == ".jpg" and infile[-4:] == ".txt":
-        if outImage[-4:] == ".png":
-            outImage = outImage[:-4]
-        outImage = outImage + ".png"
-        file = open(infile)
-        msg = file.read()
-        file.close()
-        img = Image.open(inImage)
-        encode(img, msg)
-        img.save(outImage, "PNG")
-    else:
-        print("issue with last three arguments, check file extensions (*.jpg , *.txt , *)")
-elif len(sys.argv) > 5:
-    print("Too many arguments, what are you doing?! STAHP!!!!")
-else:
-    print("Check parameters (python3 project.py -h)")
+
+if __name__ == '__main__':
+    main()
