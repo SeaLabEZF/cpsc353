@@ -200,7 +200,7 @@ def help_menu():
     print("\tproject.py is used to ether encode or decode messages that have been stored\n")
     print("\twithin an image. The message, if decoded, message will be placed in your output\n")
     print("\tfile. If encode is used the message must be placed in a text file and fed as an argument.\n")
-	print("\tThis program does not support multi-image injection.\n")
+    print("\tThis program does not support multi-image injection.\n")
     print("\nCOMMAND\n")
     print("\t[-h|-H] --help\t\tdisplays a short description of what the program does and how to run it.\n")
     print("\t[-d|-D] --decode\ttakes <*.png> image and a name for your output message.\n")
