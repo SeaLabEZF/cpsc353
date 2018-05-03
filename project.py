@@ -162,9 +162,9 @@ def injector(img, width, col, row, finish, bin_file):
         img.putpixel((col,row),(r,g,b))
         if col is 0:
             col = width
-			if row is 0:
-			    print("Text to large, partial encode completed.")
-				break
+            if row is 0:
+                print("Text too large, partial encode.")
+                break
             row = row - 1
         col = col - 1
 
