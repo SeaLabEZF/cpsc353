@@ -9,7 +9,7 @@ def main():
     if len(sys.argv) == 1:
         print("missing parameter (can has [-h|-H|-d|-D|-e|-E]?)")
     elif len(sys.argv) == 2 and (sys.argv[1] == '-h' or sys.argv[1] == '-H'):
-        helpMenu()
+        help_menu()
     elif len(sys.argv) == 4 and (sys.argv[1] == '-d' or sys.argv[1] == '-D'):
         inImage = sys.argv[2]
         infile = sys.argv[3]
@@ -147,17 +147,17 @@ def encode(img, msg):
 # inject information (in binary) calls the           #
 # getpixel function to access current RGB, modifies  #
 # them with the string of bits from bin_file by      #
-# by calling the newRGB function                     #
+# by calling the new_RGB function                     #
 ######################################################
 def injector(img, width, col, row, finish, bin_file):
     bin_file_index = 0
     for i in range(finish):
         r, g, b = img.getpixel((col, row))
-        r = newRGB(r, int(bin_file[bin_file_index]))
+        r = new_RGB(r, int(bin_file[bin_file_index]))
         bin_file_index += 1
-        g = newRGB(g, int(bin_file[bin_file_index]))
+        g = new_RGB(g, int(bin_file[bin_file_index]))
         bin_file_index += 1
-        b = newRGB(b, int(bin_file[bin_file_index]))
+        b = new_RGB(b, int(bin_file[bin_file_index]))
         bin_file_index += 1
         img.putpixel((col,row),(r,g,b))
         if col is 0:
@@ -166,23 +166,23 @@ def injector(img, width, col, row, finish, bin_file):
         col = col - 1
 
 ######################################################
-# Function: newRGB                                   #
-# Input: originalRGB, bit                            #
+# Function: new_RGB                                  #
+# Input: original_RGB, bit                           #
 # Output: modified RGB value                         #
 #                                                    #
 # Description:                                       #
 # This takes RGB values one by one with a bit to     #
-# inject will see if the originalRGB is odd          #
+# inject will see if the original_RGB is odd         #
 # if it is the value is subtracted by 1 and the      #
 # injected bit is placed at the LSB.                 #
 ######################################################
-def newRGB(originalRGB, bit):
-    if originalRGB % 2 is 1:
-        return originalRGB - 1 + bit
-    return originalRGB + bit
+def new_RGB(original_RGB, bit):
+    if original_RGB % 2 is 1:
+        return original_RGB - 1 + bit
+    return original_RGB + bit
 
 ######################################################
-# Function: helpMenu                                 #
+# Function: help_menu                                #
 # Input: N/A                                         #
 # Output: N/A                                        #
 #                                                    #
@@ -190,7 +190,7 @@ def newRGB(originalRGB, bit):
 # Outputs a help menu for the program.               #
 ######################################################
 
-def helpMenu():
+def help_menu():
     print("\t\tproject.py\n")
     print("SYNOPSIS\n")
     print("\tpython3 project.py [-h|-H]\n")
@@ -200,6 +200,7 @@ def helpMenu():
     print("\tproject.py is used to ether encode or decode messages that have been stored\n")
     print("\twithin an image. The message, if decoded, message will be placed in your output\n")
     print("\tfile. If encode is used the message must be placed in a text file and fed as an argument.\n")
+	print("\tThis program does not support multi-image injection.\n")
     print("\nCOMMAND\n")
     print("\t[-h|-H] --help\t\tdisplays a short description of what the program does and how to run it.\n")
     print("\t[-d|-D] --decode\ttakes <*.png> image and a name for your output message.\n")

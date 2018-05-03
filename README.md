@@ -18,6 +18,8 @@ DESCRIPTION
 	within an image. The message, if decoded, message will be placed in your output
 
 	file. If encode is used the message must be placed in a text file and fed as an argument.
+	
+	This program does not support multi-image injection.
 
 
 COMMAND
