@@ -172,15 +172,14 @@ def injector(img, width, col, row, finish, bin_file):
 #                                                    #
 # Description:                                       #
 # This takes RGB values one by one with a bit to     #
-# inject will see if the originalRGB is even         #
+# inject will see if the originalRGB is odd          #
 # if it is the value is subtracted by 1 and the      #
 # injected bit is placed at the LSB.                 #
 ######################################################
 def newRGB(originalRGB, bit):
-    if(originalRGB % 2 is 1):
-        return (originalRGB-1) + bit
-    else:
-        return originalRGB + bit
+    if originalRGB % 2 is 1:
+        return originalRGB - 1 + bit
+    return originalRGB + bit
 
 ######################################################
 # Function: helpMenu                                 #
