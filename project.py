@@ -70,7 +70,7 @@ def decode(img):
     col = width-12
     pixel_amount = math.ceil(msg_size/3)
     msg = extractor(img, width, col, row, pixel_amount)
-    msg = msg[:msg_size]
+    msg = msg[-msg_size:]
     converted_msg = ''.join(chr(int(msg[i:i+8],2)) for i in range(0, len(msg),8))
     return converted_msg
 
@@ -87,7 +87,6 @@ def decode(img):
 # and stores it within information_bin as a string   #
 ######################################################
 def extractor(img, width, col, row, finish = 11):
-
     information_bin = ''
     for i in range(finish):
         r, g, b = img.getpixel((col, row))
@@ -125,17 +124,17 @@ def encode(img, msg):
     msg_len_bin = msg_len_bin[-33:]
 
     msg_bin = str(bin(int.from_bytes(msg.encode(), 'big')))
-    msg_bin = msg_bin[:1] + msg_bin[2:]
+    msg_bin = msg_bin[2:]
+    msg_bin_under_by = 3 - (len(msg_bin) % 3)
+    msg_bin = '0' * msg_bin_under_by + msg_bin
 
-    pixel_amount = int(msg_len/3)
+    pixel_amount = math.ceil(msg_len/3)
     print("injecting size")
     injector(img, width, col, row, 11, msg_len_bin)
-    print("size injected")
     col = width-12
     print("injecting message")
     injector(img, width, col, row, pixel_amount, msg_bin)
-    print("message injected")
-    
+
 ######################################################
 # Function: injector                                 #
 # Input: img, width, col, row, finish, bin_file      #
@@ -147,7 +146,7 @@ def encode(img, msg):
 # inject information (in binary) calls the           #
 # getpixel function to access current RGB, modifies  #
 # them with the string of bits from bin_file by      #
-# by calling the new_RGB function                     #
+# by calling the new_RGB function                    #
 ######################################################
 def injector(img, width, col, row, finish, bin_file):
     bin_file_index = 0
@@ -192,7 +191,6 @@ def new_RGB(original_RGB, bit):
 # Description:                                       #
 # Outputs a help menu for the program.               #
 ######################################################
-
 def help_menu():
     print("\t\tproject.py\n")
     print("SYNOPSIS\n")
