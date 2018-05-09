@@ -95,6 +95,9 @@ def extractor(img, width, col, row, finish = 11):
         information_bin += str(bin(b))[-1]
         if col is 0:
             col = width
+			if row is 0:
+			    print("Text was too large, partial decode.")
+				break
             row = row - 1
         col = col - 1
     return information_bin
